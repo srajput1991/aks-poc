@@ -1,0 +1,50 @@
+module "network" {
+  source             = "./modules/network"
+  location           = "${var.location}"
+  resource_prefix    = "${var.resource_prefix}"
+  vnet_address_space = "${var.vnet_address_space}"
+}
+
+module "kubernetes" {
+  source                           = "./modules/kubernetes"
+  resource_group_name              = "${module.network.resource_group_name}"
+  resource_prefix                  = "${var.resource_prefix}"
+  nodecount                        = "${var.nodecount}"
+  vm_size                          = "${var.vm_size}"
+  location                         = "${var.location}"
+  vnet_subnet_id                   = "${module.network.vnet_subnet_id}"
+  enable_auto_scaling              = "${var.enable_auto_scaling}"
+  os_disk_size_gb                  = "${var.os_disk_size_gb}"
+  username                         = "${var.username}"
+  ssh_key_path                     = "${var.ssh_key_path}"
+  key_data                         = "${var.key_data}"
+  vnet_address_space               = "${var.vnet_address_space}"
+  allowed_ipaddress                = "${var.allowed_ipaddress}"
+  service_prinicipal_client_id     = "${var.service_prinicipal_client_id}"
+  service_prinicipal_client_secret = "${var.service_prinicipal_client_secret}"
+  client_app_id                    = "${var.client_app_id}"
+  server_app_id                    = "${var.server_app_id}"
+  server_app_secret                = "${var.server_app_secret}"
+  tenant_id                        = "${var.tenant_id}"
+}
+
+module "bastion" {
+  source               = "./modules/bastion"
+  resource_group_name  = "${module.network.resource_group_name}"
+  location             = "${var.location}"
+  resource_prefix      = "${var.resource_prefix}"
+  username             = "${var.username}"
+  vnet_address_space   = "${var.vnet_address_space}"
+  virtual_network_name = "${module.network.virtual_network_name}"
+  ssh_key_path         = "${var.ssh_key_path}"
+  key_data             = "${var.key_data}"
+  admin_password       = "${var.admin_password}"
+  allowed_ipaddress    = "${var.allowed_ipaddress}"
+}
+
+module "dnszone" {
+  source              = "./modules/dnszone"
+  resource_group_name = "${module.network.resource_group_name}"
+  dnszone_name        = "${var.dnszone_name}"
+  resource_prefix     = "${var.resource_prefix}"
+}

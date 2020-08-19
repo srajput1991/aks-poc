@@ -1,0 +1,39 @@
+#
+## Tenant ID of current client.
+#output "tenant_id" {
+#  value = "${data.azurerm_client_config.current.tenant_id}"
+#}
+#
+## Secret of Provisioned Service Principal for the Azure AD application.
+#output "server_app_secret" {
+#  value = "${random_password.aks-aad-srv.result}"
+#}
+#
+## Azure AD application ID
+#output "server_app_id" {
+#  value = "${azuread_application.aks-aad-srv.application_id}"
+#}
+#
+## Azure AD Client ID
+#output "client_app_id" {
+#  value = "${azuread_application.aks-aad-client.id}"
+#}
+
+
+output "tenantId" {
+  value = "${data.azurerm_client_config.current.tenant_id}"
+}
+
+output "serverApplicationSecret" {
+  value = "${azuread_application.aks_sp.id}"
+}
+
+output "serverApplicationId" {
+  #value = "${azuread_application_password.aks-aad-srv.id}"
+  value = "${azuread_application.aks-aad-srv.application_id}"
+}
+
+output "clientApplicationId" {
+  value = "${azuread_application.aks-aad-client.id}"
+}
+
