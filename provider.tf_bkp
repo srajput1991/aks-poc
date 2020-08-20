@@ -14,4 +14,3 @@ provider "local" {
 provider "azuread" {
   version = "~> 0.3"
 }
-

@@ -1,7 +1,7 @@
-#variable "container_registry_id" {
-#  description = "Resource id of the ACR"
-#  type        = string
-#}
+variable "container_registry_id" {
+  description = "Resource id of the ACR"
+  type        = string
+}
 
 #variable "log_analytics_workspace_id" {
 #  description = "Resource id of the Log Analytics workspace"
@@ -64,20 +64,20 @@ variable "default_node_pool" {
   })
 }
 
-#variable "additional_node_pools" {
-#  description = "The map object to configure one or several additional node pools with number of worker nodes, worker node VM size and Availability Zones."
-#  type = map(object({
-#    node_count                     = number
-#    vm_size                        = string
-#    zones                          = list(string)
-#    labels                         = map(string)
-#    taints                         = list(string)
-#    node_os                        = string
-#    cluster_auto_scaling           = bool
-#    cluster_auto_scaling_min_count = number
-#    cluster_auto_scaling_max_count = number
-#  }))
-#}
+variable "additional_node_pools" {
+  description = "The map object to configure one or several additional node pools with number of worker nodes, worker node VM size and Availability Zones."
+  type = map(object({
+    node_count                     = number
+    vm_size                        = string
+    zones                          = list(string)
+    labels                         = map(string)
+    taints                         = list(string)
+    node_os                        = string
+    cluster_auto_scaling           = bool
+    cluster_auto_scaling_min_count = number
+    cluster_auto_scaling_max_count = number
+  }))
+}
 
 variable "addons" {
   description = "Defines which addons will be activated."

@@ -71,7 +71,7 @@ resource "azurerm_kubernetes_cluster" "aks" {
   addon_profile {
     oms_agent {
       enabled                    = var.addons.oms_agent
-      log_analytics_workspace_id = var.log_analytics_workspace_id
+      #log_analytics_workspace_id = var.log_analytics_workspace_id
     }
     kube_dashboard {
       enabled = var.addons.kubernetes_dashboard
@@ -86,38 +86,38 @@ resource "azurerm_kubernetes_cluster" "aks" {
     outbound_type      = "loadBalancer"
     network_plugin     = "azure"
     network_policy     = "calico"
-    dns_service_ip     = "10.0.0.10"
+    dns_service_ip     = "10.10.0.10"
     docker_bridge_cidr = "172.17.0.1/16"
-    service_cidr       = "10.0.0.0/16"
+    service_cidr       = "10.10.0.0/16"
   }
 }
 
-#resource "azurerm_kubernetes_cluster_node_pool" "aks" {
-#  lifecycle {
-#    ignore_changes = [
-#      node_count
-#    ]
-#  }
+resource "azurerm_kubernetes_cluster_node_pool" "aks" {
+  lifecycle {
+    ignore_changes = [
+      node_count
+    ]
+  }
 
-#  for_each = var.additional_node_pools
+  for_each = var.additional_node_pools
 
-#  kubernetes_cluster_id = azurerm_kubernetes_cluster.aks.id
-#  name                  = each.value.node_os == "Windows" ? substr(each.key, 0, 6) : substr(each.key, 0, 12)
-#  orchestrator_version  = var.kubernetes_version
-#  node_count            = each.value.node_count
-#  vm_size               = each.value.vm_size
-#  availability_zones    = each.value.zones
-#  max_pods              = 250
-#  os_disk_size_gb       = 128
-#  os_type               = each.value.node_os
-#  vnet_subnet_id        = var.vnet_subnet_id
-#  node_labels           = each.value.labels
-#  node_taints           = each.value.taints
-#  enable_auto_scaling   = each.value.cluster_auto_scaling
-#  min_count             = each.value.cluster_auto_scaling_min_count
-#  max_count             = each.value.cluster_auto_scaling_max_count
-#  enable_node_public_ip = false
-#}
+  kubernetes_cluster_id = azurerm_kubernetes_cluster.aks.id
+  name                  = each.value.node_os == "Windows" ? substr(each.key, 0, 6) : substr(each.key, 0, 12)
+  orchestrator_version  = var.kubernetes_version
+  node_count            = each.value.node_count
+  vm_size               = each.value.vm_size
+  availability_zones    = each.value.zones
+  max_pods              = 250
+  os_disk_size_gb       = 128
+  os_type               = each.value.node_os
+  vnet_subnet_id        = var.vnet_subnet_id
+  node_labels           = each.value.labels
+  node_taints           = each.value.taints
+  enable_auto_scaling   = each.value.cluster_auto_scaling
+  min_count             = each.value.cluster_auto_scaling_min_count
+  max_count             = each.value.cluster_auto_scaling_max_count
+  enable_node_public_ip = false
+}
 
 resource "azurerm_role_assignment" "aks" {
   scope                = azurerm_kubernetes_cluster.aks.id

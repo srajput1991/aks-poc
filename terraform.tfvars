@@ -12,7 +12,7 @@ allowed_ipaddress  = ["0.0.0.0/0"]
 ## K8S Environment Variables ########
 #####################################
 nodecount           = 1
-vm_size             = "Standard_DS1_v2"
+vm_size             = "Standard_D2_v2"
 enable_auto_scaling = false
 os_disk_size_gb     = 100
 ssh_key_path        = "/home/terraform/.ssh/authorized_keys"
@@ -26,9 +26,40 @@ dnszone_name = ""
 #####################################
 ## AD Environment Variables ########
 #####################################
-client_app_id = ""
-server_app_id = ""
-server_app_secret = ""
-service_prinicipal_client_id = ""
-service_prinicipal_client_secret = ""
-tenant_id = ""
+addons={
+  oms_agent=false
+  kubernetes_dashboard=false
+  azure_policy=false
+}
+
+default_node_pool={
+  name="nodepool1"
+  node_count=3
+  vm_size="Standard_D2_v2"
+  zones=["1","2"]
+  labels={
+    "environment" = "demo"
+  }
+  taints = null
+  cluster_auto_scaling = true
+  cluster_auto_scaling_min_count=3
+  cluster_auto_scaling_max_count=5
+}
+
+additional_node_pools={
+  nodepool1={
+    node_count = 3
+    vm_size = "Standard_DS1_v2"
+    zones = ["1","2"]
+    labels={
+      "environment" = "demo"
+    }
+    taints = null
+    node_os = "Linux"
+    cluster_auto_scaling = true
+    cluster_auto_scaling_min_count = 3
+    cluster_auto_scaling_max_count = 5
+  }
+}
+
+container_registry_id="/subscriptions/01a44637-0c14-411e-8e31-b1d5c14727eb/resourceGroups/acr-rg/providers/Microsoft.ContainerRegistry/registries/sachin"
