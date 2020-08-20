@@ -48,6 +48,7 @@ module kubernetes {
 
   additional_node_pools={
     nodepool1={
+      name = "nodepool2"
       node_count = 3
       vm_size = "Standard_DS1_v2"
       zones = ["1","2"]

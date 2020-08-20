@@ -102,7 +102,7 @@ resource "azurerm_kubernetes_cluster_node_pool" "aks" {
   for_each = var.additional_node_pools
 
   kubernetes_cluster_id = azurerm_kubernetes_cluster.aks.id
-  name                  = each.value.node_os == "Windows" ? substr(each.key, 0, 6) : substr(each.key, 0, 12)
+  name                  = each.value.name
   orchestrator_version  = var.kubernetes_version
   node_count            = each.value.node_count
   vm_size               = each.value.vm_size

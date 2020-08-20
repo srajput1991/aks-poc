@@ -34,7 +34,7 @@ addons={
 
 default_node_pool={
   name="nodepool1"
-  node_count=3
+  node_count=1
   vm_size="Standard_D2_v2"
   zones=["1","2"]
   labels={
@@ -42,13 +42,14 @@ default_node_pool={
   }
   taints = null
   cluster_auto_scaling = true
-  cluster_auto_scaling_min_count=3
-  cluster_auto_scaling_max_count=5
+  cluster_auto_scaling_min_count=1
+  cluster_auto_scaling_max_count=2
 }
 
 additional_node_pools={
-  nodepool1={
-    node_count = 3
+  nodepool2={
+    node_count = 1
+    name = "nodepool2"
     vm_size = "Standard_DS1_v2"
     zones = ["1","2"]
     labels={
@@ -57,8 +58,8 @@ additional_node_pools={
     taints = null
     node_os = "Linux"
     cluster_auto_scaling = true
-    cluster_auto_scaling_min_count = 3
-    cluster_auto_scaling_max_count = 5
+    cluster_auto_scaling_min_count = 1
+    cluster_auto_scaling_max_count = 2
   }
 }
 

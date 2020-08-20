@@ -120,6 +120,7 @@ variable "default_node_pool" {
 variable "additional_node_pools" {
   description = "The map object to configure one or several additional node pools with number of worker nodes, worker node VM size and Availability Zones."
   type = map(object({
+    name                           = string
     node_count                     = number
     vm_size                        = string
     zones                          = list(string)
